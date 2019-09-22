@@ -3,10 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose  =require('mongoose');
 
+/* IMPORTED MODULES */
+var CONFIG = require('./app/configurations/databaseConfig');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var propertyRouter = require('./routes/propertyRoute');
 
+mongoose.connect(CONFIG.db_url);
 var app = express();
 
 // view engine setup
@@ -21,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/property', propertyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
