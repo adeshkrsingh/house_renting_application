@@ -35,6 +35,35 @@ class propertyModel extends baseModel {
         }
     }
 
+    pushNewBlockInProperty(owner_property_id, newBlockInpropObj) {
+        if (this.validateParameters()) {
+            var self = this;
+            newBlockInpropObj.done = true;
+            /* Promise start */
+            return new Promise((resolve, reject) => {
+                this.schemaUsed.update({
+                        _id: owner_property_id
+                    }, {
+                        $push: {
+                            property_details: newBlockInpropObj
+                        }
+                    },
+                    function (err, rowData) {
+                        if (err) {
+                            reject([]);
+                        }
+                        if (!rowData) {
+                            reject([]);
+                        }
+                        resolve(rowData);
+                    });
+            });
+            /* Promise ends */
+        } else {
+            return [];
+        }
+    }
+
     approveUserApplication(owner_property_id, user_id) {
         if (this.validateParameters()) {
             var self = this;

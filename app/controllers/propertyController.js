@@ -16,6 +16,24 @@ class PropertyController {
             });
         });
     }
+    createNewProperty(property_name, owner_name, owner_email) {
+
+        var queryObj = [{
+            property_name: 'Property 1 ',
+            owner_name: 'Adesh Singh',
+            owner_email: 'adesh@example.com',
+        }];
+
+        return new Promise((resolve, reject) => {
+            propertyModel.create(queryObj).then((rowData) => {
+                if (!rowData) {
+                    console.log(`no data avaliable in `);
+                    reject([]);
+                }
+                resolve(rowData);
+            });
+        });
+    }
     createFakeEntries() {
         /*
             Create dummy entries
@@ -81,9 +99,29 @@ class PropertyController {
         });
     }
 
-    pushApplicationRequest() {
-        var property_id = "5d87c26c462bda1cfeb152d7";
-        var block_id = "5d87c26c462bda1cfeb152d9";
+    pushNewBlocksInProperty(property_id, block_type, block_description, block_price) {
+        // var property_id = "5d87c26c462bda1cfeb152d7";
+        // var block_id = "5d87c26c462bda1cfeb152d9";
+        var newBlockObj = {
+            block_type: block_type,
+            block_description: block_description,
+            block_price: block_price,
+        };
+        return new Promise((resolve, reject) => {
+            propertyModel.pushNewBlockInProperty(property_id, newBlockObj).then((rowData) => {
+                if (!rowData) {
+                    console.log(`no data avaliable in `);
+                    reject([]);
+                }
+                resolve(rowData);
+            });
+        });
+    }
+
+
+    pushApplicationRequest(property_id, block_id, user_name, user_email) {
+        // var property_id = "5d87c26c462bda1cfeb152d7";
+        // var block_id = "5d87c26c462bda1cfeb152d9";
         var newPropertyApplicantObj = {
             block_id: block_id,
             user_name: 'user 1',
